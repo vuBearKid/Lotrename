@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="link.vu1984.lotrename.PickDirActivity">
+    <item
+        android:id="@+id/rename_file"
+        android:orderInCategory="100"
+        android:title="@string/rename"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/check_all"
+        android:orderInCategory="90"
+        android:title="@string/check_all"
+        android:icon="@android:drawable/checkbox_on_background"
+        app:showAsAction="always" />
+    <!--<item-->
+        <!--android:id="@+id/action_settings2"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="设置2"-->
+        <!--app:showAsAction="never" />-->
+</menu>

@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">大熋子重命名</string>
+    <string name="app_version">V 1.0</string>
+    <string name="app_description">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;这是一个绿色APP，无论是外观还是内在。它帮助人们批量地重命名文件，如你用手机拍的许多美图。使用直观，但不一定简单，这要看您对正则表达式有一点儿了解不。\n注意：Android4.0以下，不支持，且未经测试。</string>
+    <string name="app_contact">发现严重BUG求联系，邮箱、微博、微信:\nllweiyuu@gmail.com</string>
+
+    <string name="exit_app_hint">再按一次退出</string>
+    <string name="about">关于</string>
+    <string name="help">帮助</string>
+
+    <string name="root_dir">根目录</string>
+
+    <string name="temp_string">临时文字</string>
+    <string name="file_type">文件类型</string>
+    <string name="back_to_parent_dir">返回上层文件夹</string>
+    <string name="can_read">可读</string>
+    <string name="can_write">可写</string>
+    <string name="item_is_selected">项已经选定</string>
+
+
+    <string name="choose_order_mode">请选择排序模式</string>
+    <string name="order_by">排序</string>
+    <string name="order_by_name">名称</string>
+    <string name="order_by_name_desc">名称(降序)</string>
+    <string name="order_by_date">日期</string>
+    <string name="order_by_date_desc">日期(降序)</string>
+    <string name="order_by_length">大小</string>
+    <string name="order_by_length_desc">大小(降序)</string>
+    <string name="order_by_ext">扩展名（文件类型）</string>
+    <string name="check_all">全选</string>
+    <string name="please_wait">请稍后...</string>
+    <string name="rename">重命名</string>
+    <string name="rename_done">重命名完成！</string>
+    <string name="rename_success">成功数：</string>
+    <string name="rename_failure">失败数：</string>
+    <string name="rename_sure">确定</string>
+    <string name="rename_cancel">取消</string>
+    <string name="rename_warning_title">警告</string>
+    <string name="rename_warning_info">重命名是不可恢复操作，请确认？</string>
+    <string name="file_name_submit">确定</string>
+    <string name="file_name_preview">注意：点击窗口外或返回键可预览</string>
+    <string name="file_name_extension">扩展名</string>
+    <string name="file_name_extension_hint">输入扩展名，不包括“.”</string>
+    <string name="file_name_extension_title">修改文件扩展名</string>
+    <string name="file_name_extension_help">没有扩展名的，将添加扩展名。只接受英文字母或数字。</string>
+    <string name="file_name_replace">字符替换</string>
+    <string name="file_name_replace_from_hint">输入要替换字符</string>
+    <string name="file_name_replace_to_hint">输入替换字符</string>
+    <string name="file_name_replace_is_regex">支持正则表达式</string>
+    <string name="file_name_replace_help">文件名不允许包含以下字符：\n \\ / : ？ * &lt; &gt; |</string>
+    <string name="file_name_replace_title">替换文件名中的字符</string>
+    <string name="file_name_prefix">前后缀</string>
+    <string name="file_name_prefix_hint">#{self}</string>
+    <string name="file_name_prefix_auto_zero">序号自动补0</string>
+    <string name="file_name_prefix_help">#:代表自增序号&#160; \n {self}:代表原文件名，不包括扩展名</string>
+    <string name="file_name_prefix_title">添加前后缀</string>
+
+    <string name="regex_help"></string>
+
+</resources>

@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="link.vu1984.lotrename.PickDirActivity">
+    <item
+        android:id="@+id/order_by"
+        android:orderInCategory="80"
+        android:title="@string/order_by"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/app_help"
+        android:orderInCategory="100"
+        android:title="@string/help"
+        android:icon="@android:drawable/ic_menu_help"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/app_about"
+        android:orderInCategory="100"
+        android:title="@string/about"
+        app:showAsAction="never" />
+</menu>

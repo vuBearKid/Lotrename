@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rename_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/rename_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center_vertical"
+        android:padding="3dp"
+        android:textColor="@color/white"
+        android:background="@color/toolbarBackgroundColor"
+        android:text=""
+        android:textSize="@dimen/file_list_name_size" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15">
+
+        <LinearLayout
+            android:id="@+id/rename_extension_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:background="@color/renameExtension">
+            <EditText
+                android:id="@+id/rename_extension_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:maxLength="18"
+                android:hint="@string/file_name_extension_hint"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:text="@string/file_name_extension_help"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:textColor="@color/colorAccent"
+                android:text="@string/file_name_preview"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rename_replace_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@color/renameReplace"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/rename_replace_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:paddingLeft="3dp"
+                android:hint="@string/file_name_replace_from_hint"/>
+            <EditText
+                android:id="@+id/rename_replace_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:hint="@string/file_name_replace_to_hint"/>
+            <CheckBox
+                android:id="@+id/rename_replace_regex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/file_name_replace_is_regex"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:text="@string/file_name_replace_help"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:paddingLeft="3dp"
+                android:text="@string/file_name_preview"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rename_prefix_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@color/renamePrefix"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/rename_prefix_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:paddingLeft="3dp"
+                android:text="@string/file_name_prefix_hint"/>
+            <CheckBox
+                android:id="@+id/rename_prefix_auto_zero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/file_name_prefix_auto_zero"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:text="@string/file_name_prefix_help"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:paddingLeft="3dp"
+                android:text="@string/file_name_preview"/>
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/rename_extension"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rename_extension_button"
+            android:text="@string/file_name_extension" />
+
+        <Button
+            android:id="@+id/rename_replace"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rename_replace_button"
+            android:text="@string/file_name_replace" />
+
+        <Button
+            android:id="@+id/rename_prefix"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/rename_prefix_button"
+            android:text="@string/file_name_prefix" />
+
+    </LinearLayout>
+
+</LinearLayout>

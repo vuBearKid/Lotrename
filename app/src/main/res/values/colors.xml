@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#67E300</color>
+    <color name="colorPrimaryDark">#00AF64</color>
+    <color name="colorAccent">#CCF600</color>
+    <color name="toolbarBackgroundColor">#3D8F42</color>
+    <color name="darkGreen">#145D19</color>
+    <color name="GreenB">#3D6B40</color>
+    <color name="GreenD">#71C777</color>
+    <color name="backgroundGreen">#88C78C</color>
+    <color name="alertColor">#B7F200</color>
+    <color name="white">#FFFFFF</color>
+    <color name="warningYellow">#FFC107</color>
+    <color name="renamePrefix">#007241</color>
+    <color name="renameReplace">#218359</color>
+    <color name="renameExtension">#00AF64</color>
+    <color name="transparent">#00000000</color>
+</resources>
