@@ -7,6 +7,10 @@
     <string name="exit_app_hint">再按一次退出</string>
     <string name="about">关于</string>
     <string name="help">帮助</string>
+    <string name="help_resume">简介</string>
+    <string name="help_rename">重命名</string>
+    <string name="help_preview">预览</string>
+    <string name="help_regex">正则</string>
 
     <string name="root_dir">根目录</string>
 

@@ -50,7 +50,9 @@ public class HelpActivity extends VUActivity {
         });
         toolbarTop.setVisibility(View.GONE);
 
-        helpViewPager = new HelpViewPager();
+        helpViewPager = new HelpViewPager(new String[] {getString(R.string.help_resume),getString(R.string.help_rename),getString(R.string.help_preview),getString(R.string.help_regex)});
+
+
 
 
     }
@@ -88,7 +90,7 @@ public class HelpActivity extends VUActivity {
 
         private LinearLayout viewpagerTitle;
 
-        public HelpViewPager(){
+        public HelpViewPager(String[] StrArrTitle){
             viewPager = (ViewPager) findViewById(R.id.help_viewpager);
             LayoutInflater layoutInflater = getLayoutInflater();
             view1 = layoutInflater.inflate(R.layout.help_viewpager_layout1,(ViewGroup) mContainer,false);
@@ -105,10 +107,10 @@ public class HelpActivity extends VUActivity {
             viewList.add(view3);
             viewList.add(view4);
 
-            viewListTitle.add("简介");
-            viewListTitle.add("重命名");
-            viewListTitle.add("预览");
-            viewListTitle.add("正则");
+            viewListTitle.add(StrArrTitle[0]);
+            viewListTitle.add(StrArrTitle[1]);
+            viewListTitle.add(StrArrTitle[2]);
+            viewListTitle.add(StrArrTitle[3]);
 
             HelpViewpagerAdapter pagerAdapter = new HelpViewpagerAdapter(viewList,viewListTitle);
             viewPager.setAdapter(pagerAdapter);
