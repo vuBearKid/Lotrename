@@ -40,11 +40,18 @@
     </style>
 
     <style name="VUAlertDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <!--<item name="android:windowTitleStyle">@style/VUwindowTitleStyle</item>-->
         <item name="android:textSize">15sp</item>
         <item name="android:background">@drawable/bg_alert_dialog_rectangle</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="colorAccent">@color/warningYellow</item>
     </style>
+    <!--<style name="VUwindowTitleStyle">-->
+        <!--<item name="android:textAppearance"></item>-->
+    <!--</style>-->
+    <!--<style name="VUwindowTitleStyle">-->
+        <!--<item name="android:textAppearance"></item>-->
+    <!--</style>-->
     <style name="VUDialogFragment" parent="Theme.AppCompat.Dialog.Alert" >
         <item name="android:textSize">12sp</item>
         <item name="android:windowBackground">@android:color/transparent</item>
