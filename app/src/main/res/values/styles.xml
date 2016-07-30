@@ -40,18 +40,19 @@
     </style>
 
     <style name="VUAlertDialog" parent="Theme.AppCompat.Dialog.Alert">
-        <!--<item name="android:windowTitleStyle">@style/VUwindowTitleStyle</item>-->
-        <item name="android:textSize">15sp</item>
+        <item name="android:windowTitleStyle">@style/VUwindowTitleStyle</item>
+        <item name="android:textSize">14sp</item><!--比windowTitleStyle要高优先级-->
         <item name="android:background">@drawable/bg_alert_dialog_rectangle</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="colorAccent">@color/warningYellow</item>
     </style>
-    <!--<style name="VUwindowTitleStyle">-->
-        <!--<item name="android:textAppearance"></item>-->
-    <!--</style>-->
-    <!--<style name="VUwindowTitleStyle">-->
-        <!--<item name="android:textAppearance"></item>-->
-    <!--</style>-->
+    <style name="VUwindowTitleStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#ffff00</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+    </style>
+
     <style name="VUDialogFragment" parent="Theme.AppCompat.Dialog.Alert" >
         <item name="android:textSize">12sp</item>
         <item name="android:windowBackground">@android:color/transparent</item>
