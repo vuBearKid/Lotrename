@@ -283,9 +283,12 @@ public class RenamePopupWindow {
                 bodyExtension.setVisibility(View.GONE);
                 bodyReplace.setVisibility(View.GONE);
                 bodyPrefix.setVisibility(View.VISIBLE);
-                if (mContext.renamePrefix != null) inputPrefix.setText(mContext.renamePrefix);
-                //因为一开始就有例子在那里，所以要补始化
-                if (mContext.renamePrefix == null) mContext.renamePrefix = mContext.getString(R.string.file_name_prefix_hint);
+                //因为一开始就有例子在那里，所以要初始化
+                if (mContext.renamePrefix == null){
+                    mContext.renamePrefix = mContext.getString(R.string.file_name_prefix_hint);
+                }else{
+                    inputPrefix.setText(mContext.renamePrefix);
+                }
                 prefixAutoZero.setChecked(mContext.renamePrefixAutoZero);
                 break;
             default:

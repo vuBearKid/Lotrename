@@ -56,6 +56,7 @@ public class PickDirActivity extends VUActivity {
     private static final String TAG = "PickDirActivity";
 
     private PickDirActivity mContext;
+    private VUSetting mSetting;
 
     public Toolbar toolbar;
     public Toolbar toolbarBottom;
@@ -95,6 +96,24 @@ public class PickDirActivity extends VUActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pick_dir_activity);
         mContext = this;
+
+        //设置初始化
+        mSetting = VUSetting.getInstance(mContext);
+        if (mSetting.getSetting(VUSetting.HISTORY_DIR) == null){
+            mSetting.setSetting(VUSetting.HISTORY_DIR,VUApplication.extStoragePath);
+        }
+        if(mSetting.getSetting("renameExtension") != null)
+            renameExtension = mSetting.getSetting("renameExtension");
+        if(mSetting.getSetting("renameReplaceFrom") != null)
+            renameReplaceFrom = mSetting.getSetting("renameReplaceFrom");
+        if(mSetting.getSetting("renameReplaceTo") != null)
+            renameReplaceTo = mSetting.getSetting("renameReplaceTo");
+        if(mSetting.getSetting("renameReplaceIsRegex") != null)
+            renameReplaceIsRegex = Boolean.valueOf(mSetting.getSetting("renameReplaceIsRegex"));
+        if(mSetting.getSetting("renamePrefixAutoZero") != null)
+            renamePrefixAutoZero =Boolean.valueOf( mSetting.getSetting("renamePrefixAutoZero"));
+        if(mSetting.getSetting("renamePrefix") != null)
+            renamePrefix = mSetting.getSetting("renamePrefix");
 
         VULog.e(TAG, "codeChanged ? 33333"); // TODO: 2016/6/12 看代码改变没
 
@@ -151,7 +170,7 @@ public class PickDirActivity extends VUActivity {
         });
 
         //
-        currentDir = new File(VUApplication.extStoragePath);
+        currentDir = new File(mSetting.getSetting(VUSetting.HISTORY_DIR));
         toolbar.setTitle(currentDir.getName());
         toolbar.setSubtitle(currentDir.getParent());
         //对filesItems赋予数据
@@ -201,6 +220,12 @@ public class PickDirActivity extends VUActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        saveSetting();
+        VULog.e(TAG,"onDestroy");
+    }
 
     private void showOrderDialog() {
         //android.R.drawable.alert_light_frame
@@ -285,6 +310,7 @@ public class PickDirActivity extends VUActivity {
             return;
         }
         currentDir = dir;
+        mSetting.setSetting(VUSetting.HISTORY_DIR,currentDir.getAbsolutePath());//记录当前目录
         String tempTitle = currentDir.getName();
         String tempSubtitle = currentDir.getParent();
         if (VUtil.isStringEmpty(tempTitle, false)) {
@@ -555,7 +581,6 @@ public class PickDirActivity extends VUActivity {
                 Message message = new Message();
                 message.what = PREVIEW_DONE;
                 handler.sendMessage(message);
-                //// TODO: 2016/7/31
             }
         }).start();
 
@@ -840,8 +865,17 @@ public class PickDirActivity extends VUActivity {
 
     }
 
-    private long firstTimeDown = 0;
+    private void saveSetting(){
+        mSetting.setSetting("renameExtension",renameExtension);
+        mSetting.setSetting("renameReplaceFrom",renameReplaceFrom);
+        mSetting.setSetting("renameReplaceTo",renameReplaceTo);
+        mSetting.setSetting("renameReplaceIsRegex",Boolean.toString(renameReplaceIsRegex));
+        mSetting.setSetting("renamePrefixAutoZero",Boolean.toString(renamePrefixAutoZero));
+        mSetting.setSetting("renamePrefix",renamePrefix);
+        mSetting.saveSetting();
+    }
 
+    private long firstTimeDown = 0;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
@@ -852,8 +886,8 @@ public class PickDirActivity extends VUActivity {
                     firstTimeDown = secondTimeDown;//更新点击时间
                     return true;
                 } else {
-                    //finish();
-                    System.exit(0);
+                    finish();
+                    //System.exit(0);
                 }
                 break;
             default:
