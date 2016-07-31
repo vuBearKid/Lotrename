@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -31,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -62,8 +66,7 @@ public class PickDirActivity extends VUActivity {
 
     private File currentDir;
     private ListView fileListView;
-    private
-    FileItemAdapter fileItemAdapter;
+    private FileItemAdapter fileItemAdapter;
 
     private List<FileItem> filesItems = new ArrayList<FileItem>();
 
@@ -93,7 +96,7 @@ public class PickDirActivity extends VUActivity {
         setContentView(R.layout.pick_dir_activity);
         mContext = this;
 
-        VULog.e(TAG, "codeChanged ? 2222"); // TODO: 2016/6/12 看代码改变没
+        VULog.e(TAG, "codeChanged ? 33333"); // TODO: 2016/6/12 看代码改变没
 
         //toolbar初始化
         toolbar = (Toolbar) findViewById(R.id.toolbar_top);
@@ -109,12 +112,12 @@ public class PickDirActivity extends VUActivity {
                         showOrderDialog();
                         break;
                     case R.id.app_help:
-                        Intent intent = new Intent(mContext,HelpActivity.class);
+                        Intent intent = new Intent(mContext, HelpActivity.class);
                         mContext.startActivity(intent);
                         break;
                     case R.id.app_about:
                         AboutDialogFragment aboutDialog = new AboutDialogFragment();
-                        aboutDialog.show(getFragmentManager(),"AboutDialog");
+                        aboutDialog.show(getFragmentManager(), "AboutDialog");
 
                         break;
                     default:
@@ -172,7 +175,7 @@ public class PickDirActivity extends VUActivity {
         fileListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if(filesItems.get(position).isDir){
+                if (filesItems.get(position).isDir) {
                     return true;
                 }
                 VUApplication.openFile(filesItems.get(position).file);
@@ -190,8 +193,8 @@ public class PickDirActivity extends VUActivity {
         renameFab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast tempToast = Toast.makeText(mContext,getString(R.string.rename),Toast.LENGTH_SHORT);
-                tempToast.setGravity(Gravity.BOTTOM|Gravity.LEFT,0,VUtil.dip2px(mContext,50));
+                Toast tempToast = Toast.makeText(mContext, getString(R.string.rename), Toast.LENGTH_SHORT);
+                tempToast.setGravity(Gravity.BOTTOM | Gravity.LEFT, 0, VUtil.dip2px(mContext, 50));
                 tempToast.show();
                 return true;
             }
@@ -201,17 +204,17 @@ public class PickDirActivity extends VUActivity {
 
     private void showOrderDialog() {
         //android.R.drawable.alert_light_frame
-        if(orderArray == null)
-        orderArray = new String[]{
-                getString(R.string.order_by_name),
-                getString(R.string.order_by_name_desc),
-                getString(R.string.order_by_date),
-                getString(R.string.order_by_date_desc),
-                getString(R.string.order_by_length),
-                getString(R.string.order_by_length_desc),
-                getString(R.string.order_by_ext),
-        };
-        AlertDialog orderDialog = new AlertDialog.Builder(this,R.style.VUAlertDialog)
+        if (orderArray == null)
+            orderArray = new String[]{
+                    getString(R.string.order_by_name),
+                    getString(R.string.order_by_name_desc),
+                    getString(R.string.order_by_date),
+                    getString(R.string.order_by_date_desc),
+                    getString(R.string.order_by_length),
+                    getString(R.string.order_by_length_desc),
+                    getString(R.string.order_by_ext),
+            };
+        AlertDialog orderDialog = new AlertDialog.Builder(this, R.style.VUAlertDialog)
                 .setTitle(getString(R.string.choose_order_mode))
                 .setSingleChoiceItems(orderArray, whichOrder, new DialogInterface.OnClickListener() {
                     @Override
@@ -256,23 +259,24 @@ public class PickDirActivity extends VUActivity {
     }
 
 
-    private void goCheckAll(){
-        for (FileItem i : filesItems){
-            if(i.canBeChecked){
+    private void goCheckAll() {
+        for (FileItem i : filesItems) {
+            if (i.canBeChecked) {
                 i.isCheck = !isCheckAll;
             }
-            if(!i.isCheck){
+            if (!i.isCheck) {
                 i.renamePreview = null;
             }
         }
         isCheckAll = !isCheckAll;
-        if(isCheckAll){
+        fileItemAdapter.notifyDataSetChanged();
+
+        if (isCheckAll) {
+            VULog.e(TAG, "goCheckAll(CheckAll)");
             renamePreview(currentRename);
             //VULog.e(TAG,"renamePreview");
         }
         showOrHideToolbarBottom();
-        fileItemAdapter.notifyDataSetChanged();
-
     }
 
 
@@ -282,8 +286,8 @@ public class PickDirActivity extends VUActivity {
         }
         currentDir = dir;
         String tempTitle = currentDir.getName();
-        String tempSubtitle =currentDir.getParent();
-        if(VUtil.isStringEmpty(tempTitle,false)) {
+        String tempSubtitle = currentDir.getParent();
+        if (VUtil.isStringEmpty(tempTitle, false)) {
             tempTitle = getString(R.string.root_dir);
         }
         toolbar.setTitle(tempTitle);
@@ -333,10 +337,10 @@ public class PickDirActivity extends VUActivity {
             if (file.canWrite()) {
                 tempStr.append("/");
                 tempStr.append(getString(R.string.can_write));
-                if(!isDir){
+                if (!isDir) {
                     canBeCheck = true;
                 }
-            }else{
+            } else {
                 canBeCheck = false;
             }
             //添加到列表数据
@@ -402,125 +406,160 @@ public class PickDirActivity extends VUActivity {
         }
     }
 
-    public void renamePreview(int currentRename) { // TODO: 2016/6/13  这重命名规则改了，对应的rrenameFile也要改
-        int colorAccent = ContextCompat.getColor(this, R.color.colorAccent);
-        switch (currentRename) {
-            case RenamePopupWindow.RENAME_EXTENSION:
-                if (VUtil.isStringEmpty(renameExtension, true)) {
-                    isRenameFabNeeded = false;
-                    return;
-                }
-                Pattern p = Pattern.compile("\\.[a-zA-Z0-9]+$");
-                String replacement = "." + renameExtension;
-                for (FileItem i : filesItems) {
-                    if (i.isCheck) {
-                        Matcher m = p.matcher(i.fileName);
-                        String tempStr = "";
-                        if (m.matches()) {//如果文件名是 .ext
-                            tempStr = i.fileName + replacement;
-                        } else {
-                            int hasMatch = 0;
-                            while (m.find()) {
-                                hasMatch++;
-                            }
-                            if (hasMatch > 0) {
-                                tempStr = m.replaceFirst(replacement);
-                            } else {
-                                tempStr = i.fileName + replacement;
+    public void renamePreview(int currentRename) { // TODO: 2016/6/13  这重命名规则改了，对应的renameFile也要改
+        final int colorAccent = ContextCompat.getColor(this, R.color.colorAccent);
+        final int curRename = currentRename;
+        //showProgressDialog();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                switch (curRename) {
+                    case RenamePopupWindow.RENAME_EXTENSION:
+                        if (VUtil.isStringEmpty(renameExtension, true)) {
+                            isRenameFabNeeded = false;
+                            break;
+                        }
+                        Pattern p = Pattern.compile("\\.[a-zA-Z0-9]+$");
+                        String replacement = "." + renameExtension;
+                        for (FileItem i : filesItems) {
+                            if (i.isCheck) {
+                                Matcher m = p.matcher(i.fileName);
+                                String tempStr = "";
+                                if (m.matches()) {//如果文件名是 .ext
+                                    tempStr = i.fileName + replacement;
+                                } else {
+                                    int hasMatch = 0;
+                                    while (m.find()) {
+                                        hasMatch++;
+                                    }
+                                    if (hasMatch > 0) {
+                                        tempStr = m.replaceFirst(replacement);
+                                    } else {
+                                        tempStr = i.fileName + replacement;
+                                    }
+                                }
+                                i.renamePreview = new SpannableString(tempStr);
+
+                                //上色
+                                i.renamePreview.setSpan(new ForegroundColorSpan(colorAccent), 0, tempStr.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             }
                         }
-                        i.renamePreview = new SpannableString(tempStr);
+                        //mContext.renameExtension
+                        break;
+                    case RenamePopupWindow.RENAME_REPLACE:
+                        if (VUtil.isStringEmpty(renameReplaceTo, true) && VUtil.isStringEmpty(renameReplaceFrom, true)) {
+                            isRenameFabNeeded = false;
+                            break;
+                        }
 
-                        //上色
-                        i.renamePreview.setSpan(new ForegroundColorSpan(colorAccent), 0, tempStr.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    }
-                }
-                //mContext.renameExtension
-                break;
-            case RenamePopupWindow.RENAME_REPLACE:
-                if (VUtil.isStringEmpty(renameReplaceTo, true) && VUtil.isStringEmpty(renameReplaceFrom, true)) {
-                    isRenameFabNeeded = false;
-                    return;
-                }
-
-                String strFrom;
-                String strTo;
-                if(VUtil.isStringEmpty(renameReplaceTo, true)){//看作删除对应字符
-                    strTo="";
-                }else{
-                    strTo = renameReplaceTo.trim();
-                }
-
-                boolean isRename = false;
-                if (VUtil.isStringEmpty(renameReplaceFrom, true)) {//看作想重命名
-                    isRename = true;
-                    strFrom = "";
-                } else {
-                    strFrom = renameReplaceFrom.trim();
-                }
-                Pattern p1 = Pattern.compile(strFrom);
-
-                for (FileItem i : filesItems) {
-                    if (i.isCheck) {
-                        String[] filenameAndExt = VUtil.getFileNameAndExtension(i.fileName);
-                        String newString;
-                        if (isRename) {//目标为空，看作想重命名
-                            newString = strTo;
+                        String strFrom;
+                        String strTo;
+                        if (VUtil.isStringEmpty(renameReplaceTo, true)) {//看作删除对应字符
+                            strTo = "";
                         } else {
-                            if (renameReplaceIsRegex) {//正则式的替换
-                                newString = p1.matcher(filenameAndExt[0]).replaceAll(strTo);
-                            } else {//简单字符替换
-                                newString = filenameAndExt[0].replace(strFrom, strTo);
+                            strTo = renameReplaceTo.trim();
+                        }
+
+                        boolean isRename = false;
+                        if (VUtil.isStringEmpty(renameReplaceFrom, true)) {//看作想重命名
+                            isRename = true;
+                            strFrom = "";
+                        } else {
+                            strFrom = renameReplaceFrom.trim();
+                        }
+                        Pattern p1 = Pattern.compile(strFrom);
+
+                        for (FileItem i : filesItems) {
+                            if (i.isCheck) {
+                                String[] filenameAndExt = VUtil.getFileNameAndExtension(i.fileName);
+                                String newString;
+                                if (isRename) {//目标为空，看作想重命名
+                                    newString = strTo;
+                                } else {
+                                    if (renameReplaceIsRegex) {//正则式的替换
+                                        newString = p1.matcher(filenameAndExt[0]).replaceAll(strTo);
+                                    } else {//简单字符替换
+                                        newString = filenameAndExt[0].replace(strFrom, strTo);
+                                    }
+                                }
+                                newString += filenameAndExt[1];//加上扩展名
+                                i.renamePreview = new SpannableString(newString);
+                                //上色
+                                i.renamePreview.setSpan(new ForegroundColorSpan(colorAccent), 0, newString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             }
                         }
-                        newString += filenameAndExt[1];//加上扩展名
-                        i.renamePreview = new SpannableString(newString);
-                        //上色
-                        i.renamePreview.setSpan(new ForegroundColorSpan(colorAccent), 0, newString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    }
-                }
-                break;
-            case RenamePopupWindow.RENAME_PREFIX:
-                if (VUtil.isStringEmpty(renamePrefix, true)) {
-                    isRenameFabNeeded = false;
-                    return;
-                }
+                        break;
+                    case RenamePopupWindow.RENAME_PREFIX:
+                        if (VUtil.isStringEmpty(renamePrefix, true)) {
+                            isRenameFabNeeded = false;
+                            break;
+                        }
 
-                //补0
-                int checkedAmount = 0;
-                DecimalFormat decimalFormat = new DecimalFormat("0");
-                if (renamePrefixAutoZero) {
-                    checkedAmount = getItemCheckedCount();
-                    int digitLong = (checkedAmount + "").length();
-                    StringBuilder digitFormat = new StringBuilder();
-                    for (int i = 0; i < digitLong; i++) {
-                        digitFormat.append("0");
-                    }
-                    decimalFormat.applyPattern(digitFormat.toString());
+                        //补0
+                        int checkedAmount = 0;
+                        DecimalFormat decimalFormat = new DecimalFormat("0");
+                        if (renamePrefixAutoZero) {
+                            checkedAmount = getItemCheckedCount();
+                            int digitLong = (checkedAmount + "").length();
+                            StringBuilder digitFormat = new StringBuilder();
+                            for (int i = 0; i < digitLong; i++) {
+                                digitFormat.append("0");
+                            }
+                            decimalFormat.applyPattern(digitFormat.toString());
+                        }
+
+                        int increaseFlag = 1;
+                        for (FileItem i : filesItems) {
+
+                            if (i.isCheck) {
+                                String[] filenameAndExt = VUtil.getFileNameAndExtension(i.fileName);
+                                String newString = renamePrefix.trim();
+                                newString = newString.replace("#", decimalFormat.format(increaseFlag));//替换（添加）序号
+                                increaseFlag++;
+
+                                //特别定制，图片长宽高
+                                String mimeType = VUFile.getMimeType(i.fileName);
+                                if ((mimeType.split("/"))[0].equalsIgnoreCase("image")) {
+                                    String imageH = null,imageW = null;
+
+                                    try {
+                                        ExifInterface exif = new ExifInterface(i.file.getAbsolutePath());
+                                        imageW = exif.getAttribute(ExifInterface.TAG_IMAGE_WIDTH);
+                                        imageH = exif.getAttribute(ExifInterface.TAG_IMAGE_LENGTH);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (imageW == null || imageH == null){
+                                        BitmapFactory.Options options = new BitmapFactory.Options();
+                                        options.inJustDecodeBounds = true;
+                                        BitmapFactory.decodeFile(i.file.getAbsolutePath(), options);
+                                        imageH = options.outHeight+"";
+                                        imageW = options.outWidth+"";
+                                    }
+                                    //添加长宽
+                                    newString = newString.replace("{h}", imageH);
+                                    newString = newString.replace("{w}", imageW);
+                                }
+
+                                newString = newString.replace("{self}", filenameAndExt[0]);//替换原文件名
+                                newString += filenameAndExt[1];//加上扩展名
+
+                                i.renamePreview = new SpannableString(newString);
+                                //上色
+                                i.renamePreview.setSpan(new ForegroundColorSpan(colorAccent), 0, newString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            }
+                        }
+                        break;
+                    default:
                 }
+                Message message = new Message();
+                message.what = PREVIEW_DONE;
+                handler.sendMessage(message);
+                //// TODO: 2016/7/31
+            }
+        }).start();
 
-                int increaseFlag = 1;
-                for (FileItem i : filesItems) {
-                    if (i.isCheck) {
-                        String[] filenameAndExt = VUtil.getFileNameAndExtension(i.fileName);
-                        String newString = renamePrefix.trim();
-                        newString = newString.replace("#", decimalFormat.format(increaseFlag));//替换（添加）序号
-                        increaseFlag++;
 
-                        newString = newString.replace("{self}", filenameAndExt[0]);//替换原文件名
-                        newString += filenameAndExt[1];//加上扩展名
-                        i.renamePreview = new SpannableString(newString);
-                        //上色
-                        i.renamePreview.setSpan(new ForegroundColorSpan(colorAccent), 0, newString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    }
-                }
-                break;
-            default:
-        }
-        isRenameFabNeeded = true;
-        renameFab.show();
-
-        fileItemAdapter.notifyDataSetChanged();
 
 
     }
@@ -529,7 +568,6 @@ public class PickDirActivity extends VUActivity {
     private int failureCount = 0;
 
     public void renameFile(int currentRename) { // TODO: 2016/6/13  这重命名规则改了，对应的renamePreview也要改
-        showProgressDialog();
         final int CR = currentRename;
         //在新进程里重命名
         new Thread(new Runnable() {
@@ -578,9 +616,9 @@ public class PickDirActivity extends VUActivity {
 
                         String strFrom;
                         String strTo;
-                        if(VUtil.isStringEmpty(renameReplaceTo, true)){//看作删除对应字符
-                            strTo="";
-                        }else{
+                        if (VUtil.isStringEmpty(renameReplaceTo, true)) {//看作删除对应字符
+                            strTo = "";
+                        } else {
                             strTo = renameReplaceTo.trim();
                         }
 
@@ -644,8 +682,33 @@ public class PickDirActivity extends VUActivity {
                                 newString = newString.replace("#", decimalFormat.format(increaseFlag));//替换（添加）序号
                                 increaseFlag++;
 
+                                //特别定制，图片长宽高
+                                String mimeType = VUFile.getMimeType(i.fileName);
+                                if ((mimeType.split("/"))[0].equalsIgnoreCase("image")) {
+                                    String imageH = null,imageW = null;
+
+                                    try {
+                                        ExifInterface exif = new ExifInterface(i.file.getAbsolutePath());
+                                        imageW = exif.getAttribute(ExifInterface.TAG_IMAGE_WIDTH);
+                                        imageH = exif.getAttribute(ExifInterface.TAG_IMAGE_LENGTH);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (imageW == null || imageH == null){
+                                        BitmapFactory.Options options = new BitmapFactory.Options();
+                                        options.inJustDecodeBounds = true;
+                                        BitmapFactory.decodeFile(i.file.getAbsolutePath(), options);
+                                        imageH = options.outHeight+"";
+                                        imageW = options.outWidth+"";
+                                    }
+                                    //添加长宽
+                                    newString = newString.replace("{h}", imageH);
+                                    newString = newString.replace("{w}", imageW);
+                                }
+
                                 newString = newString.replace("{self}", filenameAndExt[0]);//替换原文件名
                                 newString += filenameAndExt[1];//加上扩展名
+
 
                                 File toFile = new File(i.file.getParent() + VUApplication.DIR_SEPARATOR + newString);
                                 if (toFile.exists()) {
@@ -679,6 +742,7 @@ public class PickDirActivity extends VUActivity {
     }
 
     public static final int RENAME_DONE = 1;
+    public static final int PREVIEW_DONE = 2;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -694,6 +758,18 @@ public class PickDirActivity extends VUActivity {
                     String feedback = getString(R.string.rename_done) + getString(R.string.rename_success) + replyData.getInt("success") + " " + getString(R.string.rename_failure) + replyData.getInt("failure");
                     hideProgressDialog();
                     Toast.makeText(mContext, feedback, Toast.LENGTH_LONG).show();
+                    break;
+                case PREVIEW_DONE:
+
+                    if (renameWindow != null) {
+                        renameWindow.dismiss();
+                    }
+                    isRenameFabNeeded = true;
+                    renameFab.show();
+                    fileItemAdapter.notifyDataSetChanged();
+                    //VULog.e(TAG, "PREVIEW_DONE");
+                    //hideProgressDialog();
+
                     break;
                 default:
             }
@@ -725,7 +801,7 @@ public class PickDirActivity extends VUActivity {
         if (tempCount > 0) {
             mContext.toolbarBottom.setVisibility(View.VISIBLE);
             checkInfo.setText(tempCount + " " + getString(R.string.item_is_selected));
-            if(isRenameFabNeeded) renameFab.show();
+            if (isRenameFabNeeded) renameFab.show();
         } else {
             renameFab.hide();
             mContext.toolbarBottom.setVisibility(View.GONE);
@@ -745,7 +821,9 @@ public class PickDirActivity extends VUActivity {
     }
 
     private ProgressDialog proDialog;
-    public void showProgressDialog(){
+
+    public void showProgressDialog() {
+        if (proDialog!=null) return;
         proDialog = new ProgressDialog(mContext);
         proDialog.setMessage(getString(R.string.please_wait));
         proDialog.setIndeterminate(false);
@@ -754,12 +832,16 @@ public class PickDirActivity extends VUActivity {
         proDialog.show();
     }
 
-    public void hideProgressDialog(){
-        if(proDialog != null)
+    public void hideProgressDialog() {
+        if (proDialog != null){
             proDialog.dismiss();
+            proDialog = null;
+        }
+
     }
 
     private long firstTimeDown = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {

@@ -115,7 +115,8 @@ class FileItemAdapter extends ArrayAdapter<FileItem> {
                     //还原R.id.file_listitem_info
                     ((TextView)((View)buttonView.getParent()).findViewById(R.id.file_listitem_info)).setText(getItem(position).fileInfo);
                 }else{
-                    mContext.renamePreview(mContext.currentRename);// TODO: 2016/6/12 可优化针对当前
+                    if(getItem(position).renamePreview == null)
+                        mContext.renamePreview(mContext.currentRename);// TODO: 2016/6/12 可优化针对当前
                 }
                 mContext.showOrHideToolbarBottom();
                 VULog.e(TAG,"position:"+position);
