@@ -124,7 +124,7 @@ class VULog {
     public static final int NOTHING = 6;
 
     //all below the LEVEL message will be showed,need to chang it in the code manually
-    public static final int LEVEL = NOTHING;
+    public static final int LEVEL = ERROR;
 
 
     public static void v(String tag, String msg) {
@@ -241,7 +241,7 @@ class VUFile {
     public static String getMimeType(String filename){
         String tempMimeType;
         String[] file = getFileNameAndExtension(filename);
-        tempMimeType = mimeType.get(file[1]);
+        tempMimeType = mimeType.get(file[1].toLowerCase());
         if(tempMimeType == null){
             tempMimeType = "*/*";
         }
