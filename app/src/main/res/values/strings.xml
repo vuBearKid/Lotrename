@@ -58,7 +58,7 @@
     <string name="file_name_replace_help">文件名不允许包含以下字符：\n \\ / : ？ * &lt; &gt; |</string>
     <string name="file_name_replace_title">替换文件名中的字符</string>
     <string name="file_name_prefix">前后缀</string>
-    <string name="file_name_prefix_hint">{#}_{self}_{w}X{h}</string>
+    <string name="file_name_prefix_hint">{#}_{self}</string>
     <string name="file_name_prefix_sequence">序号位数：</string>
     <string name="file_name_prefix_sequence_default">2</string>
     <string name="file_name_prefix_auto_zero">自动补0</string>
