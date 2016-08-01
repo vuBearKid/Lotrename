@@ -5,6 +5,7 @@
     <string name="app_contact">发现严重BUG求联系，邮箱、微博:\nllweiyuu@gmail.com</string>
 
     <string name="exit_app_hint">再按一次退出</string>
+    <string name="refresh">刷新</string>
     <string name="about">关于</string>
     <string name="help">帮助</string>
     <string name="help_resume">简介</string>
@@ -13,13 +14,16 @@
     <string name="help_regex">正则</string>
 
     <string name="root_dir">根目录</string>
-
     <string name="temp_string">临时文字</string>
     <string name="file_type">文件类型</string>
     <string name="back_to_parent_dir">返回上层文件夹</string>
     <string name="can_read">可读</string>
     <string name="can_write">可写</string>
     <string name="item_is_selected">项已经选定</string>
+
+    <string name="permission_title">提示</string>
+    <string name="permission_i_got_it">知道了</string>
+    <string name="permission_prompt">请您手动到APP设置里打开权限需求。</string>
 
 
     <string name="choose_order_mode">请选择排序模式</string>

@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="link.vu1984.lotrename.PickDirActivity">
     <item
+        android:id="@+id/refresh_list"
+        android:orderInCategory="80"
+        android:title="@string/refresh"
+        android:icon="@android:drawable/ic_popup_sync"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/order_by"
         android:orderInCategory="80"
         android:title="@string/order_by"

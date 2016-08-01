@@ -124,7 +124,7 @@ class VULog {
     public static final int NOTHING = 6;
 
     //all below the LEVEL message will be showed,need to chang it in the code manually
-    public static final int LEVEL = ERROR;
+    public static final int LEVEL = NOTHING;
 
 
     public static void v(String tag, String msg) {

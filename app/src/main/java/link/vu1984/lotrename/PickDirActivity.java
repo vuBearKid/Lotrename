@@ -1,31 +1,28 @@
 package link.vu1984.lotrename;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -98,6 +95,7 @@ public class PickDirActivity extends VUActivity {
         setContentView(R.layout.pick_dir_activity);
         mContext = this;
 
+
         //设置初始化
         mSetting = VUSetting.getInstance(mContext);
         if (mSetting.getSetting(VUSetting.HISTORY_DIR) == null) {
@@ -132,7 +130,9 @@ public class PickDirActivity extends VUActivity {
                 switch (item.getItemId()) {
                     case R.id.order_by:
                         showOrderDialog();
-                        //saveSetting();
+                        break;
+                    case R.id.refresh_list:
+                        refreshList(currentDir);
                         break;
                     case R.id.app_help:
                         Intent intent = new Intent(mContext, HelpActivity.class);
@@ -241,6 +241,72 @@ public class PickDirActivity extends VUActivity {
     protected void onDestroy() {
         super.onDestroy();
         VULog.e(TAG, "onDestroy");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //android 6.0 权限检查
+        if(VUCheckMPermission.checkIsM()){
+            VUCheckMPermission permissionChecker = new VUCheckMPermission(this);
+            String[] permissions = new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            };
+            if(!permissionChecker.checkPermissions(permissions)){
+                permissionChecker.requestPermissions(this,permissions);
+            }
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case VUCheckMPermission.PERMISSION_REQUEST_CODE:
+                boolean isAllPermissionGranted = true;
+                for (int i = 0; i < permissions.length; i++){
+                    if(!VUCheckMPermission.isPermissionResultGranted(grantResults[i])){//permission没得到许可
+                        VULog.e(TAG,"没得到许可:"+permissions[i]);
+                        if(VUCheckMPermission.shouldShowRequestPermissionRationale(this,permissions[i])){//可再提示
+                            VULog.e(TAG,"可再提示");
+                            this.finish();
+                        }else{//用户选择不再提示
+                            //不许可，又不再提示，只能88了
+                            showPermissionPromptDialog();
+                            VULog.e(TAG,"不可再提示");
+                        }
+                        isAllPermissionGranted = false;
+                        break;
+
+                        //只要一个没得到许可就退出
+                    }else{
+                        VULog.e(TAG,"得到许可:"+permissions[i]);
+                    }
+                }
+                //都得到许可
+                if(isAllPermissionGranted) refreshList(currentDir);
+
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+    }
+
+    private void showPermissionPromptDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.VUAlertDialog);
+        builder.setTitle(getString(R.string.permission_title));
+        builder.setMessage(getString(R.string.permission_prompt));
+        builder.setPositiveButton(getString(R.string.permission_i_got_it), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                PickDirActivity.this.finish();
+            }
+        });
+        builder.show();
     }
 
     private void showOrderDialog() {
