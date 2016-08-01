@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
+        android:background="@color/toolbarBackgroundColor"
         android:gravity="center_vertical"
         android:padding="3dp"
-        android:textColor="@color/white"
-        android:background="@color/toolbarBackgroundColor"
         android:text=""
+        android:textColor="@color/white"
         android:textSize="@dimen/file_list_name_size" />
 
     <FrameLayout
@@ -27,99 +27,126 @@
             android:id="@+id/rename_extension_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/renameExtension"
             android:orientation="vertical"
-            android:visibility="visible"
-            android:background="@color/renameExtension">
+            android:visibility="visible">
+
             <EditText
                 android:id="@+id/rename_extension_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/file_name_extension_hint"
                 android:lines="1"
-                android:maxLength="18"
-                android:hint="@string/file_name_extension_hint"/>
+                android:maxLength="18" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="3dp"
-                android:text="@string/file_name_extension_help"/>
+                android:text="@string/file_name_extension_help" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="3dp"
-                android:textColor="@color/colorAccent"
-                android:text="@string/file_name_preview"/>
+                android:text="@string/file_name_preview"
+                android:textColor="@color/colorAccent" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/rename_replace_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             android:background="@color/renameReplace"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
+
             <EditText
                 android:id="@+id/rename_replace_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/file_name_replace_from_hint"
                 android:lines="1"
-                android:paddingLeft="3dp"
-                android:hint="@string/file_name_replace_from_hint"/>
+                android:paddingLeft="3dp" />
+
             <EditText
                 android:id="@+id/rename_replace_to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="1"
-                android:hint="@string/file_name_replace_to_hint"/>
+                android:hint="@string/file_name_replace_to_hint"
+                android:lines="1" />
+
             <CheckBox
                 android:id="@+id/rename_replace_regex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:text="@string/file_name_replace_is_regex"/>
+                android:text="@string/file_name_replace_is_regex" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="3dp"
-                android:text="@string/file_name_replace_help"/>
+                android:text="@string/file_name_replace_help" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
                 android:paddingLeft="3dp"
-                android:text="@string/file_name_preview"/>
+                android:text="@string/file_name_preview"
+                android:textColor="@color/colorAccent" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/rename_prefix_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             android:background="@color/renamePrefix"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
+
             <EditText
                 android:id="@+id/rename_prefix_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:paddingLeft="3dp"
-                android:text="@string/file_name_prefix_hint"/>
-            <CheckBox
-                android:id="@+id/rename_prefix_auto_zero"
+                android:text="@string/file_name_prefix_hint" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="@string/file_name_prefix_auto_zero"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/file_name_prefix_sequence" />
+                <EditText
+                    android:id="@+id/rename_prefix_sequence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="@string/file_name_prefix_sequence_default"/>
+                <CheckBox
+                    android:id="@+id/rename_prefix_auto_zero"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/file_name_prefix_auto_zero" />
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="3dp"
-                android:text="@string/file_name_prefix_help"/>
+                android:text="@string/file_name_prefix_help" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
                 android:paddingLeft="3dp"
-                android:text="@string/file_name_preview"/>
+                android:text="@string/file_name_preview"
+                android:textColor="@color/colorAccent" />
         </LinearLayout>
     </FrameLayout>
 

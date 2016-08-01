@@ -50,6 +50,7 @@ public class RenamePopupWindow {
     private EditText inputReplaceTo;
     private CheckBox replaceIsRegex;
     private EditText inputPrefix;
+    private EditText inputPrefixSequence;
     private CheckBox prefixAutoZero;
 
 
@@ -72,6 +73,7 @@ public class RenamePopupWindow {
         inputReplaceTo  = (EditText) renameLayout.findViewById(R.id.rename_replace_to);
         replaceIsRegex = (CheckBox) renameLayout.findViewById(R.id.rename_replace_regex);
         inputPrefix = (EditText) renameLayout.findViewById(R.id.rename_prefix_input);
+        inputPrefixSequence = (EditText) renameLayout.findViewById(R.id.rename_prefix_sequence);
         prefixAutoZero = (CheckBox) renameLayout.findViewById(R.id.rename_prefix_auto_zero);
 
 
@@ -184,6 +186,21 @@ public class RenamePopupWindow {
                 //VULog.e(TAG,"afterTextChanged:"+mContext.renamePrefix);
             }
         });
+        inputPrefixSequence.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                mContext.renamePrefixSequence  = s.toString();
+                //VULog.e(TAG,"afterTextChanged:"+mContext.renamePrefix);
+            }
+        });
         prefixAutoZero.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -284,11 +301,12 @@ public class RenamePopupWindow {
                 bodyReplace.setVisibility(View.GONE);
                 bodyPrefix.setVisibility(View.VISIBLE);
                 //因为一开始就有例子在那里，所以要初始化
-                if (mContext.renamePrefix == null){
-                    mContext.renamePrefix = mContext.getString(R.string.file_name_prefix_hint);
-                }else{
+                if (mContext.renamePrefix != null) {
                     inputPrefix.setText(mContext.renamePrefix);
+                } else {
+                    mContext.renamePrefix = mContext.getString(R.string.file_name_prefix_hint);
                 }
+                if (mContext.renamePrefixSequence != null) inputPrefixSequence.setText(mContext.renamePrefixSequence);
                 prefixAutoZero.setChecked(mContext.renamePrefixAutoZero);
                 break;
             default:

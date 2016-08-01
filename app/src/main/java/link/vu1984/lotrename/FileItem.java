@@ -88,6 +88,7 @@ class FileItemAdapter extends ArrayAdapter<FileItem> {
         viewHolder.fileName.setText(item.fileName);
         if (!VUtil.isStringEmpty(item.renamePreview,true)){
             viewHolder.fileInfo.setText(item.renamePreview);
+            //VULog.e(TAG,item.renamePreview.toString());
         }else{
             viewHolder.fileInfo.setText(item.fileInfo);
         }

@@ -48,6 +48,7 @@
     </style>
     <style name="VUwindowTitleStyle">
         <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:maxLines">1</item>
         <item name="android:scrollHorizontally">true</item>
     </style>

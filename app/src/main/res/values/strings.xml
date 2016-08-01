@@ -2,7 +2,7 @@
     <string name="app_name">大熋子重命名</string>
     <string name="app_version">V 1.0</string>
     <string name="app_description">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;这是一个绿色APP，无论是外观还是内在。它帮助人们批量地重命名文件，如你用手机拍的许多美图。使用直观，但不一定简单，这要看您对正则表达式有一点儿了解不。\n注意：Android4.0以下，不支持，且未经测试。</string>
-    <string name="app_contact">发现严重BUG求联系，邮箱、微博、微信:\nllweiyuu@gmail.com</string>
+    <string name="app_contact">发现严重BUG求联系，邮箱、微博:\nllweiyuu@gmail.com</string>
 
     <string name="exit_app_hint">再按一次退出</string>
     <string name="about">关于</string>
@@ -54,9 +54,11 @@
     <string name="file_name_replace_help">文件名不允许包含以下字符：\n \\ / : ？ * &lt; &gt; |</string>
     <string name="file_name_replace_title">替换文件名中的字符</string>
     <string name="file_name_prefix">前后缀</string>
-    <string name="file_name_prefix_hint">#{self}_{w}X{h}</string>
-    <string name="file_name_prefix_auto_zero">序号自动补0</string>
-    <string name="file_name_prefix_help">#:代表自增序号&#160; \n {self}:代表原文件名，不包括扩展名</string>
+    <string name="file_name_prefix_hint">{#}_{self}_{w}X{h}</string>
+    <string name="file_name_prefix_sequence">序号位数：</string>
+    <string name="file_name_prefix_sequence_default">2</string>
+    <string name="file_name_prefix_auto_zero">自动补0</string>
+    <string name="file_name_prefix_help">{#}:代表自增序号&#160; \n {self}:代表原文件名，不包括扩展名</string>
     <string name="file_name_prefix_title">添加前后缀</string>
 
     <string name="regex_help"></string>
