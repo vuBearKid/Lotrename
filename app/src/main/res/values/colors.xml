@@ -11,6 +11,7 @@
     <color name="alertColor">#B7F200</color>
     <color name="white">#FFFFFF</color>
     <color name="warningYellow">#FFC107</color>
+    <color name="yellow">#FFFF00</color>
     <color name="renamePrefix">#007241</color>
     <color name="renameReplace">#218359</color>
     <color name="renameExtension">#00AF64</color>

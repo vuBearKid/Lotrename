@@ -118,6 +118,8 @@ public class PickDirActivity extends VUActivity {
 
         VULog.e(TAG, "onCreate codeChanged ? 33333"); // TODO: 2016/6/12 看代码改变没
 
+        renameWindow = new RenamePopupWindow(mContext, currentRename);
+
         //toolbar初始化
         toolbar = (Toolbar) findViewById(R.id.toolbar_top);
         toolbar.inflateMenu(R.menu.menu_toolbar);//android.support.v7.view.menu.ListMenuItemView
@@ -153,7 +155,6 @@ public class PickDirActivity extends VUActivity {
 
         toolbarBottom = (Toolbar) findViewById(R.id.toolbar_bottom);
         toolbarBottom.inflateMenu(R.menu.menu_toolbar_bottom);
-
         toolbarBottom.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -162,7 +163,7 @@ public class PickDirActivity extends VUActivity {
                         goCheckAll();
                         break;
                     case R.id.rename_file:
-                        renameWindow = new RenamePopupWindow(mContext, currentRename);
+                        if(renameWindow == null) break;
                         renameWindow.showWindow(toolbarBottom.findViewById(item.getItemId()));
                         renameFab.hide();
                         break;

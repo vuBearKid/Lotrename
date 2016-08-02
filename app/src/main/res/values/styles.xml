@@ -44,7 +44,8 @@
         <item name="android:textSize">14sp</item><!--比windowTitleStyle要高优先级-->
         <item name="android:background">@drawable/bg_alert_dialog_rectangle</item>
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="colorAccent">@color/warningYellow</item>
+        <item name="colorAccent">@color/yellow</item>
+
     </style>
     <style name="VUwindowTitleStyle">
         <item name="android:textSize">20sp</item>

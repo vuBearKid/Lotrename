@@ -44,7 +44,8 @@
     <string name="rename_sure">确定</string>
     <string name="rename_cancel">取消</string>
     <string name="rename_warning_title">警告</string>
-    <string name="rename_warning_info">重命名是不可恢复操作，请确认？</string>
+    <string name="rename_warning_info">重名命是不可恢复操作，请确认？</string>
+    <!--<string name="rename_warning_info">改名后不可恢复</string>-->
     <string name="file_name_submit">确定</string>
     <string name="file_name_preview">注意：点击窗口外或返回键可预览</string>
     <string name="file_name_extension">扩展名</string>
