@@ -52,7 +52,7 @@ public class VUApplication extends Application {
 
 
         appDir = mContext.getPackageName();
-        extStoragePath = Environment.getExternalStorageDirectory().getPath();
+        extStoragePath = Environment.getExternalStorageDirectory().getAbsolutePath();
         tempDirPath = extStoragePath + DIR_SEPARATOR + BASE_DIR + DIR_SEPARATOR + appDir + DIR_SEPARATOR + tempDir;
         PrivateExtStoragePath = mContext.getExternalFilesDir(null).getPath();
 
