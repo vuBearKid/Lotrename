@@ -63,7 +63,7 @@
     <string name="file_name_prefix_sequence">序号位数：</string>
     <string name="file_name_prefix_sequence_default">2</string>
     <string name="file_name_prefix_auto_zero">自动补0</string>
-    <string name="file_name_prefix_help">{#}:代表自增序号&#160; \n {self}:代表原文件名，不包括扩展名</string>
+    <string name="file_name_prefix_help">{#}:代表自增序号\n{self}:代表原文件名，不包括扩展名</string>
     <string name="file_name_prefix_title">添加前后缀</string>
 
     <string name="regex_help"></string>

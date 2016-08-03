@@ -403,6 +403,7 @@ public class PickDirActivity extends VUActivity {
         toolbar.setSubtitle(tempSubtitle);
         setFilesItemsData(currentDir);
         fileItemAdapter.notifyDataSetChanged();
+        isCheckAll = false;
         showOrHideToolbarBottom();
 
     }
