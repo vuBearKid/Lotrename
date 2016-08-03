@@ -252,7 +252,7 @@ public class PickDirActivity extends VUActivity {
         if(VUCheckMPermission.checkIsM()){
             VUCheckMPermission permissionChecker = new VUCheckMPermission(this);
             String[] permissions = new String[]{
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    //Manifest.permission.READ_EXTERNAL_STORAGE,//根据官方文档只要请求写权限,implicity会到到读的权限
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
             };
             if(!permissionChecker.checkPermissions(permissions)){
