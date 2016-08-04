@@ -175,7 +175,8 @@ public class PickDirActivity extends VUActivity {
         });
 
         //
-        currentDir = new File(mSetting.getSetting(VUSetting.HISTORY_DIR));
+
+        currentDir = getExistDir(new File(mSetting.getSetting(VUSetting.HISTORY_DIR)));
         toolbar.setTitle(currentDir.getName());
         toolbar.setSubtitle(currentDir.getParent());
         //对filesItems赋予数据
@@ -218,7 +219,7 @@ public class PickDirActivity extends VUActivity {
             @Override
             public boolean onLongClick(View v) {
                 Toast tempToast = Toast.makeText(mContext, getString(R.string.rename), Toast.LENGTH_SHORT);
-                tempToast.setGravity(Gravity.BOTTOM | Gravity.LEFT, 0, VUtil.dip2px(mContext, 50));
+                tempToast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, VUtil.dip2px(mContext, 20));
                 tempToast.show();
                 return true;
             }
@@ -392,7 +393,7 @@ public class PickDirActivity extends VUActivity {
         if (dir == null || !dir.isDirectory()) {//参数不合法,不是目标或空
             return;
         }
-        currentDir = dir;
+        currentDir = getExistDir(dir);
         mSetting.setSetting(VUSetting.HISTORY_DIR, currentDir.getAbsolutePath());//记录当前目录
         String tempTitle = currentDir.getName();
         String tempSubtitle = currentDir.getParent();
@@ -567,7 +568,7 @@ public class PickDirActivity extends VUActivity {
                         if (VUtil.isStringEmpty(renameReplaceTo, true)) {//看作删除对应字符
                             strTo = "";
                         } else {
-                            strTo = renameReplaceTo.trim();
+                            strTo = renameReplaceTo;//.trim();
                         }
 
                         boolean isRename = false;
@@ -575,7 +576,7 @@ public class PickDirActivity extends VUActivity {
                             isRename = true;
                             strFrom = "";
                         } else {
-                            strFrom = renameReplaceFrom.trim();
+                            strFrom = renameReplaceFrom;//.trim();
                         }
                         Pattern p1 = Pattern.compile(strFrom);
 
@@ -734,7 +735,7 @@ public class PickDirActivity extends VUActivity {
                         if (VUtil.isStringEmpty(renameReplaceTo, true)) {//看作删除对应字符
                             strTo = "";
                         } else {
-                            strTo = renameReplaceTo.trim();
+                            strTo = renameReplaceTo;//.trim();
                         }
 
                         boolean isRename = false;
@@ -742,7 +743,7 @@ public class PickDirActivity extends VUActivity {
                             isRename = true;
                             strFrom = "";
                         } else {
-                            strFrom = renameReplaceFrom.trim();
+                            strFrom = renameReplaceFrom;//.trim();
                         }
                         Pattern p1 = Pattern.compile(strFrom);
 
@@ -968,6 +969,14 @@ public class PickDirActivity extends VUActivity {
         mSetting.setSetting("renamePrefix", renamePrefix);
         mSetting.setSetting("renamePrefixSequence", renamePrefixSequence);
         mSetting.saveSetting();
+    }
+
+    private File getExistDir(File dir){
+        if (dir.exists()) {
+            return dir;
+        } else {
+            return getExistDir(dir.getParentFile());
+        }
     }
 
     private long firstTimeDown = 0;
