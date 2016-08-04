@@ -103,6 +103,8 @@ public class PickDirActivity extends VUActivity {
         if (mSetting.getSetting(VUSetting.HISTORY_DIR) == null) {
             mSetting.setSetting(VUSetting.HISTORY_DIR, VUApplication.extStoragePath);
         }
+        if (mSetting.getSetting("currentRename") != null)
+            currentRename =Integer.valueOf(mSetting.getSetting("currentRename"));
         if (mSetting.getSetting("renameExtension") != null)
             renameExtension = mSetting.getSetting("renameExtension");
         if (mSetting.getSetting("renameReplaceFrom") != null)
@@ -968,6 +970,7 @@ public class PickDirActivity extends VUActivity {
     }
 
     private void saveSetting() {
+        mSetting.setSetting("currentRename", currentRename+"");
         mSetting.setSetting("renameExtension", renameExtension);
         mSetting.setSetting("renameReplaceFrom", renameReplaceFrom);
         mSetting.setSetting("renameReplaceTo", renameReplaceTo);
