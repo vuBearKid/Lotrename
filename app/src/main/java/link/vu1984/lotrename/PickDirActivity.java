@@ -19,12 +19,14 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -189,11 +191,16 @@ public class PickDirActivity extends VUActivity {
         fileListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!filesItems.get(position).isDir) {
+                    ((CheckBox) view.findViewById(R.id.file_check)).setChecked(!filesItems.get(position).isCheck);
+                    return;
+                }
                 if (filesItems.get(position).file == null) {//反回上层目录 //
                     refreshList(currentDir.getParentFile());
                 } else {
                     refreshList((filesItems.get(position)).file);
                 }
+
                 showOrHideToolbarBottom();
             }
         });
