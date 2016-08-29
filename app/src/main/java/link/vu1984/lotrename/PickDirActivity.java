@@ -14,6 +14,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -63,6 +64,7 @@ public class PickDirActivity extends VUActivity {
     public FloatingActionButton renameFab;
     public boolean isRenameFabNeeded = false;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private File currentDir;
     private ListView fileListView;
@@ -137,9 +139,9 @@ public class PickDirActivity extends VUActivity {
                     case R.id.order_by:
                         showOrderDialog();
                         break;
-                    case R.id.refresh_list:
+                    /*case R.id.refresh_list:
                         refreshList(currentDir);
-                        break;
+                        break;*/
                     case R.id.app_help:
                         Intent intent = new Intent(mContext, HelpActivity.class);
                         mContext.startActivity(intent);
@@ -214,6 +216,17 @@ public class PickDirActivity extends VUActivity {
                 }
                 VUApplication.openFile(filesItems.get(position).file);
                 return true;
+            }
+        });
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.list_swipe_refresh);
+        swipeRefreshLayout.setColorSchemeResources(R.color.toolbarBackgroundColor);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource( R.color.colorAccent);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshList(currentDir);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 

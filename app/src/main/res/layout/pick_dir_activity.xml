@@ -18,15 +18,22 @@
         app:subtitleTextAppearance="@style/VUtoolbarSubTitle"
         app:titleTextAppearance="@style/VUtoolbarTitle">
     </android.support.v7.widget.Toolbar>
-
-    <ListView
-        android:id="@+id/file_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/list_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/toolbar_bottom"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar_top"> </ListView>
+        android:layout_below="@+id/toolbar_top">
+        <ListView
+            android:id="@+id/file_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" ></ListView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_bottom"
