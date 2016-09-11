@@ -251,7 +251,12 @@ public class PickDirActivity extends VUActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
         saveSetting();
+
+        if(quitToast != null){
+            quitToast.cancel();
+        }
         VULog.e(TAG, "onPause");
     }
 
@@ -1004,13 +1009,15 @@ public class PickDirActivity extends VUActivity {
 
     private long firstTimeDown = 0;
 
+    private Toast quitToast;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 long secondTimeDown = System.currentTimeMillis();
                 if (secondTimeDown - firstTimeDown > 1500) {//间隔时间过长
-                    Toast.makeText(this, getString(R.string.exit_app_hint), Toast.LENGTH_SHORT).show();
+                    quitToast = Toast.makeText(this, getString(R.string.exit_app_hint), Toast.LENGTH_SHORT);
+                    quitToast.show();
                     firstTimeDown = secondTimeDown;//更新点击时间
                     return true;
                 } else {
